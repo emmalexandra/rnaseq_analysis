@@ -28,7 +28,7 @@ FILE=${FILES[$SLURM_ARRAY_TASK_ID]}
 echo "Processing $FILE"
 
 # need to use bind, otherwise apptainer module cannot be found
-apptainer exec --bind /data/users/ejakobsson/rnaseq_course_analysis "$CONTAINER" \
+apptainer exec --bind /data/users/ejakobsson/rnaseq_analysis "$CONTAINER" \
     fastqc -t $SLURM_CPUS_PER_TASK -o "$OUTPUT_DIR" "$FILE"
 
 echo "Finished $FILE"
