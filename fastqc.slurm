@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #SBATCH --job-name=fastqc
-#SBATCH --array=0-29			# which files should be processed?
+#SBATCH --array=0-29			# Which files should be processed?
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=1000
 #SBATCH --time=1:00:00
@@ -19,15 +19,15 @@ mkdir -p /data/users/ejakobsson/rnaseq_analysis/FastQC/FastQC_out
 mkdir -p /data/users/ejakobsson/rnaseq_analysis/FastQC/FastQC_err
 mkdir -p "$OUTPUT_DIR"
 
-# creating an array of all FASTQ files
+# Creating an array of all FASTQ files
 FILES=($INPUT_DIR/*.fastq.gz)
 
-# selecting files we want to process
+# Selecting files we want to process
 FILE=${FILES[$SLURM_ARRAY_TASK_ID]}
 
 echo "Processing $FILE"
 
-# need to use bind, otherwise apptainer module cannot be found
+# Need to use bind, otherwise apptainer module cannot be found
 apptainer exec --bind /data/users/ejakobsson/rnaseq_analysis "$CONTAINER" \
     fastqc -t $SLURM_CPUS_PER_TASK -o "$OUTPUT_DIR" "$FILE"
 

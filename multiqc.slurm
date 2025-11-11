@@ -10,19 +10,19 @@
 #SBATCH --mail-user=emma.jakobsson@students.unibe.ch
 #SBATCH --mail-type=begin,end,fail
 
-# defining paths
+# Defining paths
 CONTAINER=/containers/apptainer/multiqc-1.19.sif
 INPUT_DIR=/data/users/ejakobsson/rnaseq_analysis/FastQC
 OUTPUT_DIR=/data/users/ejakobsson/rnaseq_analysis/MultiQC
 
-# creating directories (-p: if they exist, ignore)
+# Creating directories (-p: if they exist, ignore)
 mkdir -p "$OUTPUT_DIR/MultiQC_out"
 mkdir -p "$OUTPUT_DIR/MultiQC_err"
 mkdir -p "$OUTPUT_DIR"
 
 echo "Running MultiQC on $(pwd)"
 
-# binding the whole project folder so the container can access FastQC results for MultiQC processing
+# Binding the whole project folder so the container can access FastQC results for MultiQC processing
 apptainer exec --bind /data/users/ejakobsson/rnaseq_analysis \
     "$CONTAINER" multiqc "$INPUT_DIR" -o "$OUTPUT_DIR"
 
