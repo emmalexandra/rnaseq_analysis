@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #SBATCH --job-name=hisat2_mapping
-#SBATCH --array=0-1             # Running one pair at a time
+#SBATCH --array=10-14             # Running 5 pairs at a time
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=8000M
 #SBATCH --time=3:00:00

@@ -22,5 +22,6 @@ mkdir -p /data/users/ejakobsson/rnaseq_analysis/Index_files/Index_err
 REF_FASTA=${REF_DIR}/Mus_musculus.GRCm39.dna.primary_assembly.fa
 
 # Creating index files
+# -p: number of parallel search threads (-> faster). Specified that hisat2 should use CPUs allocated to SLURM, without oversubscribing
 apptainer exec --bind /data "$CONTAINER" \
-    hisat2-build -p $SLURM_CPUS_PER_TASK "$REF_FASTA" "${OUTPUT_DIR}/hisat2_index"
+    hisat2-build -p $SLURM_CPUS_PER_TASK "$REF_FASTA" "${OUTPUT_DIR}/hisat2_index"s

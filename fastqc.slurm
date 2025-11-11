@@ -3,7 +3,7 @@
 #SBATCH --job-name=fastqc
 #SBATCH --array=0-29			# Which files should be processed?
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=1000
+#SBATCH --mem=1000M
 #SBATCH --time=1:00:00
 #SBATCH --partition=pibu_el8
 #SBATCH --output=/data/users/ejakobsson/rnaseq_analysis/FastQC/FastQC_out/output_%x_%A_%a.o
