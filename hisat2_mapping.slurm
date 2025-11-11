@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #SBATCH --job-name=hisat2_mapping
-#SBATCH --array=10-14             # Running 5 pairs at a time
+#SBATCH --array=8-14             # Running a few pairs at a time
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=8000M
 #SBATCH --time=3:00:00
@@ -35,10 +35,12 @@ echo "Processing sample: $SAMPLE"
 # -x: The basename of the index for the reference genome.
 # -1 & -2: Tells hisat2 which files (reads) belong together, as specified above.
 # -S: File to write SAM alignments to (specifying output directory).
+# rna-strandedness for RF
 apptainer exec --bind /data "$CONTAINER" \
     hisat2 -p $SLURM_CPUS_PER_TASK \
     -x ${INDEX_DIR}/hisat2_index \
     -1 "$R1" -2 "$R2" \
+    --rna-strandness RF \
     -S ${OUTPUT_DIR}/${SAMPLE}.sam
 
 echo "Finished mapping for $SAMPLE"
