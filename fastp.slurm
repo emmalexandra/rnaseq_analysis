@@ -6,19 +6,18 @@
 #SBATCH --mem=2000M
 #SBATCH --time=2:00:00
 #SBATCH --partition=pibu_el8
-#SBATCH --output=/data/users/ejakobsson/rnaseq_analysis/FastP/FastP_out/output_%x_%A_%a.o
-#SBATCH --error=/data/users/ejakobsson/rnaseq_analysis/FastP/FastP_err/error_%x_%A_%a.o
-#SBATCH --mail-user=emma.jakobsson@students.unibe.ch
-#SBATCH --mail-type=begin,end,fail
+#SBATCH --output=/data/users/ejakobsson/rnaseq_analysis/FastQC_clean/FastQC_clean_out/output_%x_%A_%a.o
+#SBATCH --error=/data/users/ejakobsson/rnaseq_analysis/FastQC_clean/FastQC_clean_err/error_%x_%A_%a.o
 
 # Defining paths
+WORKDIR=/data/users/ejakobsson/rnaseq_analysis
 CONTAINER=/containers/apptainer/fastp_0.24.1.sif
-INPUT_DIR=/data/users/ejakobsson/rnaseq_analysis/reads_Blood
-OUTPUT_DIR=/data/users/ejakobsson/rnaseq_analysis/FastP
+INPUT_DIR=$WORKDIR/reads_Bloods
+OUTPUT_DIR=$WORKDIR/FastP
 
 # Creating directories for output
-mkdir -p /data/users/ejakobsson/rnaseq_analysis/FastP/FastP_out
-mkdir -p /data/users/ejakobsson/rnaseq_analysis/FastP/FastP_err
+mkdir -p $WORKDIR/FastP/FastP_out
+mkdir -p $WORKDIR/FastP/FastP_err
 mkdir -p "$OUTPUT_DIR"
 
 # Nb! FastQ data is paired end (gzip compressed)! 
@@ -44,8 +43,8 @@ echo "R2: $R2_FILE"
 # Auto-detection of adapters disabled for paired end data by default: turning it on
 
 apptainer exec \
-  --bind /data/users/ejakobsson/rnaseq_analysis/reads_Blood:"$INPUT_DIR" \
-  --bind /data/users/ejakobsson/rnaseq_analysis/FastP:"$OUTPUT_DIR" \
+  --bind $WORKDIR/reads_Blood:"$INPUT_DIR" \
+  --bind $WORKDIR/FastP:"$OUTPUT_DIR" \
   "$CONTAINER" \
   fastp -i "$R1_FILE" \
         -I "$R2_FILE" \

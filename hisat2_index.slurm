@@ -7,16 +7,16 @@
 #SBATCH --partition=pibu_el8
 #SBATCH --output=/data/users/ejakobsson/rnaseq_analysis/Index_files/Index_out/output_%x_%A_%a.o
 #SBATCH --error=/data/users/ejakobsson/rnaseq_analysis/Index_files/Index_err/error_%x_%A_%a.o
-#SBATCH --mail-user=emma.jakobsson@students.unibe.ch
-#SBATCH --mail-type=begin,end,fail
 
+# Specifying location of working directory, container, index files, and cleaned fastq files, and where output should go
+WORKDIR=/data/users/ejakobsson/rnaseq_analysis
 CONTAINER=/containers/apptainer/hisat2_samtools_408dfd02f175cd88.sif
-REF_DIR=/data/users/ejakobsson/rnaseq_analysis/reference_genome
-OUTPUT_DIR=/data/users/ejakobsson/rnaseq_analysis/Index_files
+REF_DIR=$WORKDIR/reference_genome
+OUTPUT_DIR=$WORKDIR/Index_files
 
 mkdir -p "$OUTPUT_DIR"
-mkdir -p /data/users/ejakobsson/rnaseq_analysis/Index_files/Index_out
-mkdir -p /data/users/ejakobsson/rnaseq_analysis/Index_files/Index_err
+mkdir -p $WORKDIR/Index_files/Index_out
+mkdir -p $WORKDIR/Index_files/Index_err
 
 # Defining reference genome sequence for indexing
 REF_FASTA=${REF_DIR}/Mus_musculus.GRCm39.dna.primary_assembly.fa
